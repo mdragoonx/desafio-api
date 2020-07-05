@@ -56,6 +56,9 @@ let corsConfig = {
   optionsSuccessStatus: 204,
 };
 
+// app.use(cors(corsConfig));
+app.use(cors());
+
 // qualquer requisição a partir de localhost:3000/ será pelo arquivo de rotas
 app.use('/', gradeRota);
 // app.use(gradeRota);
