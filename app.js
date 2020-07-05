@@ -69,12 +69,12 @@ app.use('/', gradeRota);
 // para rodar on-line, o Heroku usa a variavel process.env.PORT que é dinamicamente por ele preenchida
 // sendo assim, habilito para ouvir a porta dinamica do heroku e a porta 3001 que é padrão local
 // sendo assim, é melhor deixar o código desta forma:
-let portaAPI = process.env.PORT || 3001;
-console.log('Porta Heroku: ' + portaAPI);
+// let portaAPI = process.env.PORT || 3001;
+console.log('Porta Heroku: ' + process.env.PORT);
 
 // habilita listening da porta
 // 3001 para teste local
-app.listen(portaAPI, async () => {
+app.listen(process.env.PORT || 3001, async () => {
   console.log('---- API iniciada com sucesso ----');
   // conecta no MongoDB Atlas
   const bConectado = await conectaMongoDB();
