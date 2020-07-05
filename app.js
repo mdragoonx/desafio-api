@@ -59,10 +59,6 @@ let corsConfig = {
 // app.use(cors(corsConfig));
 app.use(cors());
 
-// qualquer requisição a partir de localhost:3000/ será pelo arquivo de rotas
-app.use('/', gradeRota);
-// app.use(gradeRota);
-
 //let portaAPI = parseInt(process.env.PORTA);
 //if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
 
@@ -71,6 +67,10 @@ app.use('/', gradeRota);
 // sendo assim, é melhor deixar o código desta forma:
 // let portaAPI = process.env.PORT || 3001;
 console.log('Porta Heroku: ' + process.env.PORT);
+
+// qualquer requisição a partir de localhost:3000/ será pelo arquivo de rotas
+app.use('/', gradeRota);
+// app.use(gradeRota);
 
 // habilita listening da porta
 // 3001 para teste local

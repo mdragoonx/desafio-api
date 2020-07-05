@@ -6,6 +6,10 @@ import controlador from '../controller/gradeC.js';
 // cria instância
 const gradeRota = express.Router();
 
+gradeRota.get('/', (req, res) => {
+  res.send('Get Raiz - Acessado com sucesso');
+});
+
 // para cada método http abaixo será chamada a função existente em gradeC.js
 // funciona
 gradeRota.post('/grade/', controlador.criaReg);
