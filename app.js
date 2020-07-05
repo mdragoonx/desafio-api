@@ -12,7 +12,7 @@ async function conectaMongoDB() {
   let bSucesso = false;
   try {
     // para habilitar o findOneandUpdate aplica useFindandmodify = false, caso contrário, não informa
-    //console.log('Parametros de Conexão:' + db.url);
+    console.log('Mongo - Parametros Conexão:' + db.url);
     await db.mongoose.connect(db.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
