@@ -63,9 +63,14 @@ app.use(cors());
 app.use('/', gradeRota);
 // app.use(gradeRota);
 
-let portaAPI = parseInt(process.env.PORTA);
-if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
-// app.listen(process.env.PORT || 8081, () => {});
+//let portaAPI = parseInt(process.env.PORTA);
+//if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
+
+// para rodar on-line, o Heroku usa a variavel process.env.PORT que é dinamicamente por ele preenchida
+// sendo assim, habilito para ouvir a porta dinamica do heroku e a porta 3001 que é padrão local
+// sendo assim, é melhor deixar o código desta forma:
+let portaAPI = process.env.PORT || 3001;
+console.log('Porta Heroku: ' + portaAPI);
 
 // habilita listening da porta
 // 3001 para teste local
