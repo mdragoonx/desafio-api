@@ -35,35 +35,38 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //define o dominio de origem para consumo do servico
+
 //libera permissão de acesso a api usando CORS
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-  })
-);
 
-// let porta = parseInt(process.env.APPCORPORT);
-// let url = process.env.APPCORURL;
-// if (porta !== 0) url = `${process.env.APPCORURL}:${process.env.APPCORPORT}`;
+// acessa propriedades de porta e site do heroku
+const appPorta = parseInt(process.env.APP_H_PORTA);
+let corsUrl = '';
 
-// let corsOptions = {
-//   origin: url,
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   preflightContinue: false,
-//   optionsSuccessStatus: 204,
-// };
-// app.use(cors(corsOptions));
+// caso porta seja 0 ou nula ela irá colocar origem local
+// para uso local, a porta é 3001
+// url / origin: 'http://localhost:3001',
+if (appPorta !== 0 || appPorta.length <= 0) corsUrl = 'http://localhost:3001';
+else corsUrl = `${process.env.APP_H_URL}:${process.env.APP_H_PORTA}`;
+
+// em origin, habilita a url do heroku onde está o app (react) que fará o acesso aos dados
+let corsConfig = {
+  origin: corsUrl,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
 
 // qualquer requisição a partir de localhost:3000/ será pelo arquivo de rotas
 app.use('/', gradeRota);
 // app.use(gradeRota);
 
-//const porta = 3001;
+let portaAPI = parseInt(process.env.PORTA);
+if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
 // app.listen(process.env.PORT || 8081, () => {});
 
 // habilita listening da porta
 // 3001 para teste local
-app.listen(3001, async () => {
+app.listen(portaAPI, async () => {
   console.log('---- API iniciada com sucesso ----');
   // conecta no MongoDB Atlas
   const bConectado = await conectaMongoDB();
