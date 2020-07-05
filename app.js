@@ -7,6 +7,8 @@ import cors from 'cors';
 import { gradeRota } from './rota/gradeR.js';
 // importa config de bd do Mongo
 import { db } from './models/index.js';
+// módulo de log
+import { logger } from './config/logger.js';
 
 async function conectaMongoDB() {
   let bSucesso = false;
@@ -19,9 +21,11 @@ async function conectaMongoDB() {
     });
     bSucesso = true;
     console.log('MongoDB - Sucesso ao conectar');
+    logger.info('MongoDB - Sucesso ao conectar');
   } catch (err) {
     bSucesso = false;
     console.log('MongoDB - ERRO ao conectar: ' + err);
+    logger.error('MongoDB - ERRO ao conectar: ' + err);
   }
   return bSucesso;
 }
@@ -67,6 +71,7 @@ app.use(cors());
 // sendo assim, é melhor deixar o código desta forma:
 // let portaAPI = process.env.PORT || 3001;
 console.log('Porta Heroku: ' + process.env.PORT);
+logger.info('Porta Heroku: ' + process.env.PORT);
 
 // qualquer requisição a partir de localhost:3000/ será pelo arquivo de rotas
 app.use('/', gradeRota);
@@ -76,9 +81,14 @@ app.use('/', gradeRota);
 // 3001 para teste local
 app.listen(process.env.PORT || 3001, async () => {
   console.log('---- API iniciada com sucesso ----');
+  logger.info('---- API iniciada com sucesso ----');
   // conecta no MongoDB Atlas
   const bConectado = await conectaMongoDB();
-  if (!bConectado)
+  if (!bConectado) {
     console.log('API - Não conectou no MongoDB! Back-end offline!');
-  else console.log('API - Back-end online!');
+    logger.info('API - Não conectou no MongoDB! Back-end offline!');
+  } else {
+    console.log('API - Back-end online!');
+    logger.info('API - Back-end online!');
+  }
 });

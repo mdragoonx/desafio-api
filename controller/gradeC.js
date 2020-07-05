@@ -1,5 +1,6 @@
 // importa informação da base de dados de index.js
 import { db } from '../models/index.js';
+import { logger } from '../config/logger.js';
 
 // constante com informações do bd
 const modeloBD = db.model;
@@ -19,13 +20,16 @@ let msg = '';
 const criaReg = async (req, res) => {
   try {
     console.log('Post CriaReg - acessado');
+    logger.info('Post CriaReg - acessado');
     const registro = new modeloBD(req.body);
     await registro.save();
     console.log(registro);
+    logger.info(registro);
     res.send(registro);
   } catch (err) {
     msg = 'Post CriaReg - Erro ao salvar: ' + err.message;
     console.log(msg);
+    logger.error(msg);
     res.send(msg);
   }
 };
@@ -38,8 +42,9 @@ const criaReg = async (req, res) => {
 const buscaGeral = async (req, res) => {
   // alimenta variavel
   console.log('Get BuscaGeral - Acessado');
+  logger.info('Get BuscaGeral - Acessado');
   const nome = req.query.name;
-  console.log(nome);
+  //console.log(nome);
 
   //condicao para o filtro no findAll:
   // new RegExp(nome) - cria objeto de expressão regular
@@ -53,11 +58,13 @@ const buscaGeral = async (req, res) => {
   try {
     const registro = await modeloBD.find(filtro);
     console.log(registro);
+    logger.info(registro);
     res.send(registro);
   } catch (err) {
     msg =
       'Get BuscaGeral - Erro ao pesquisar: ' + nome + '. Erro: ' + err.message;
     console.log(msg);
+    logger.error(msg);
     res.send(msg);
   }
 };
@@ -67,16 +74,19 @@ const buscaGeral = async (req, res) => {
 // Ex http://localhost:3000/grade/5effb701b14a4815d815d17d
 const buscaID = async (req, res) => {
   console.log('Get BuscaID - Acessado');
+  logger.info('Get BuscaID - Acessado');
   const id = req.params.id;
 
   try {
     const registro = await modeloBD.findOne({ _id: id });
     console.log(registro);
+    logger.info(registro);
     res.send(registro);
   } catch (err) {
     msg =
       'Get BuscaID - Erro ao buscar por id: ' + id + '. Erro: ' + err.message;
     console.log(msg);
+    logger.error(msg);
     res.send(msg);
   }
 };
@@ -90,6 +100,7 @@ const buscaID = async (req, res) => {
 // }
 const atualizaReg = async (req, res) => {
   console.log('Put AtualizaReg - Acessado');
+  logger.info('Put AtualizaReg - Acessado');
 
   // caso não tenha conteúdo não irá continuar
   if (!req.body) {
@@ -97,6 +108,7 @@ const atualizaReg = async (req, res) => {
       'Put AtualizaReg - Não foi informado conteúdo para atualizar: ' +
       req.body;
     console.log(msg);
+    logger.info(msg);
     res.send(msg);
   } else {
     // caso conteúdo do body NÃO seja vazio
@@ -108,6 +120,7 @@ const atualizaReg = async (req, res) => {
         new: true,
       });
       console.log(registro);
+      logger.info(registro);
       res.send(registro);
     } catch (err) {
       msg =
@@ -116,6 +129,7 @@ const atualizaReg = async (req, res) => {
         '/Erro: ' +
         err.message;
       console.log(msg);
+      logger.error(msg);
       res.send(msg);
     }
   }
@@ -126,6 +140,7 @@ const atualizaReg = async (req, res) => {
 //  endereço: http://localhost:3000/grade/5effb701b14a4815d815d17d
 const deletaReg = async (req, res) => {
   console.log('Delete Reg - Acessado');
+  logger.info('Delete Reg - Acessado');
   const id = req.params.id;
 
   try {
@@ -134,15 +149,18 @@ const deletaReg = async (req, res) => {
     if (!registro) {
       msg = 'Delete Reg - Registro não encontrado id: ' + id;
       console.log(msg);
+      logger.info(msg);
       res.send(msg);
     } else {
       msg = 'Delete Reg - Sucesso:  ' + registro;
       console.log(msg);
+      logger.info(msg);
       res.send(msg);
     }
   } catch (err) {
     msg = 'Delete Reg - Erro ao excluir id: ' + id + '. Erro:' + err.message;
     console.log(msg);
+    logger.error(msg);
     res.send(msg);
   }
 };
@@ -152,14 +170,17 @@ const deletaReg = async (req, res) => {
 // endereço: http://localhost:3000/grade
 const deletaGeral = async (req, res) => {
   console.log('Delete Geral - Acessado');
+  logger.info('Delete Geral - Acessado');
 
   try {
     const registro = await modeloBD.remove({});
     console.log(registro);
+    logger.info(registro);
     res.send(registro);
   } catch (err) {
     msg = 'Delete Geral - Erro ao excluir todos. Erro:' + err.message;
     console.log(msg);
+    logger.error(msg);
     res.send(msg);
   }
 };
