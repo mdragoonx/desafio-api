@@ -47,6 +47,7 @@ let corsUrl = '';
 if (appPorta !== 0 || appPorta.length <= 0) corsUrl = 'http://localhost:3001';
 else corsUrl = `${process.env.APP_H_URL}:${process.env.APP_H_PORTA}`;
 
+// nome do app heroku do Grades-APP
 corsUrl = 'http://dazzling-voyageurs-96307.herokuapp.com/';
 
 // em origin, habilita a url do heroku onde está o app (react) que fará o acesso aos dados
@@ -57,14 +58,14 @@ let corsConfig = {
   optionsSuccessStatus: 204,
 };
 
-app.use(cors(corsConfig));
-//app.use(cors());
-//app.options('*', cors());
-
 // informa que o express vai usar o formato json a partir do módulo bodyparser para as requisições
 app.use(bodyParser.json());
 // permite que objetos tipo array sejam encodados no formato JSON para Url encode
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//app.use(cors(corsConfig));
+app.use(cors());
+//app.options('*', cors());
 
 //let portaAPI = parseInt(process.env.PORTA);
 //if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
