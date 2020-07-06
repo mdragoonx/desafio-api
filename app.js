@@ -47,6 +47,8 @@ let corsUrl = '';
 if (appPorta !== 0 || appPorta.length <= 0) corsUrl = 'http://localhost:3001';
 else corsUrl = `${process.env.APP_H_URL}:${process.env.APP_H_PORTA}`;
 
+corsUrl = 'http://dazzling-voyageurs-96307.herokuapp.com/';
+
 // em origin, habilita a url do heroku onde está o app (react) que fará o acesso aos dados
 let corsConfig = {
   origin: corsUrl,
@@ -55,9 +57,9 @@ let corsConfig = {
   optionsSuccessStatus: 204,
 };
 
-// app.use(cors(corsConfig));
-app.use(cors());
-app.options('*', cors());
+app.use(cors(corsConfig));
+//app.use(cors());
+//app.options('*', cors());
 
 // informa que o express vai usar o formato json a partir do módulo bodyparser para as requisições
 app.use(bodyParser.json());
