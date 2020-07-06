@@ -62,6 +62,7 @@ let corsConfig = {
 
 // app.use(cors(corsConfig));
 app.use(cors());
+app.options('*', cors());
 
 //let portaAPI = parseInt(process.env.PORTA);
 //if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
