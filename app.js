@@ -33,11 +33,6 @@ async function conectaMongoDB() {
 // cria instância do Express
 const app = express();
 
-// informa que o express vai usar o formato json a partir do módulo bodyparser para as requisições
-app.use(bodyParser.json());
-// permite que objetos tipo array sejam encodados no formato JSON para Url encode
-app.use(bodyParser.urlencoded({ extended: true }));
-
 //define o dominio de origem para consumo do servico
 
 //libera permissão de acesso a api usando CORS
@@ -63,6 +58,11 @@ let corsConfig = {
 // app.use(cors(corsConfig));
 app.use(cors());
 app.options('*', cors());
+
+// informa que o express vai usar o formato json a partir do módulo bodyparser para as requisições
+app.use(bodyParser.json());
+// permite que objetos tipo array sejam encodados no formato JSON para Url encode
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //let portaAPI = parseInt(process.env.PORTA);
 //if (portaAPI !== 0 || portaAPI.length <= 0) portaAPI = 3001;
